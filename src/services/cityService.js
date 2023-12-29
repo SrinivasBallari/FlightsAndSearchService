@@ -1,14 +1,15 @@
 const { CityRepo } = require("../repository/index");
 
 class CityService {
+  
   constructor() {
     this.cityRepoObj = new CityRepo();
   }
 
   async createCity(data) {
     try {
-      const response = await this.cityRepoObj.createCity(data);
-      return response;
+      const city = await this.cityRepoObj.createCity(data);
+      return city;
     } catch (error) {
       console.log("Error occured at Service layer", error);
     }

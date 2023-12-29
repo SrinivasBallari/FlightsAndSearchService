@@ -4,10 +4,11 @@ const cityService = new CityService();
 
 const create = async (req , res)=>{
     try {
-        const response = cityService.createCity(req.body);
+        const city = await cityService.createCity(req.body);
+
         return res.status(201).json({
             message : "Success",
-            data : response,
+            data : city,
             err : {}
         });
     } catch (error) {
@@ -72,4 +73,11 @@ const update = async (req , res)=>{
             err : error
         });
     }
+}
+
+module.exports = {
+    create,
+    destroy,
+    read,
+    update
 }
