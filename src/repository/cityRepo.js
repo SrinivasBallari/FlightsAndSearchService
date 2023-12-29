@@ -40,10 +40,10 @@ class CityRepo{
 
     async updateCity(cityId, data){
         try {
-            const updatedCity = await city.update(data,{
-                where : {id : cityId}
-            });
-            return updatedCity;                
+            const searchedCity = await city.findByPk(cityId);
+            searchedCity.name = data.name;
+            await searchedCity.save();
+            return searchedCity;                
         } catch (error) {
             console.log(`Error finding city with id : ${cityId}`);
             throw({error});
