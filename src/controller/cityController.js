@@ -75,9 +75,28 @@ const update = async (req , res)=>{
     }
 }
 
+const readAll = async (req,res) =>{
+    try {
+        const response = await cityService.readAllCities(req.query);
+        res.status(200).json({
+            message: "Success",
+            data : response,
+            err: {}
+        });
+    } catch (error) {
+        console.log("error in service " , error);
+        return res.status(500).json({
+            message: "Not able to read all cities",
+            data: {},
+            err : error
+        });
+    }
+}
+
 module.exports = {
     create,
     destroy,
     read,
-    update
+    update,
+    readAll
 }

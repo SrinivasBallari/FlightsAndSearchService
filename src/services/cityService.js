@@ -41,6 +41,15 @@ class CityService {
       console.log("Error occured at Service layer", error);
     }
   }
+
+  async readAllCities(filter){
+    try {
+        const response = await this.cityRepoObj.readAllCities({name : filter.name});
+        return response;      
+    } catch (error) {
+      console.log("Error occured at Service layer", error);
+    }
+  }
 }
 
 module.exports = CityService;
