@@ -70,6 +70,16 @@ class CityRepo{
             throw({error});
         }
     }
+
+    async createAllCities(cities){
+        try {
+            const createdCities = await city.bulkCreate(cities);
+            return createdCities;
+        } catch (error) {
+            console.log(`Error creating all cities`);
+            throw({error});
+        }
+    }
 }
 
 module.exports = CityRepo;
