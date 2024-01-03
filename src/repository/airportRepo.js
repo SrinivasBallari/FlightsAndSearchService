@@ -1,30 +1,12 @@
 const { airport } = require('../models/index');
+const CrudRepo = require('./crudRepo');
 
-class AiportRepo{
+class AiportRepo extends CrudRepo{
 
-    async create({name , address, cityId}){
-        try {
-            const response = await airport.create({
-                name: name,
-                address: address,
-                cityId: cityId
-            });
-            return response;
-        } catch (error) {
-            console.log('Error in Airport Repo layer', error);
-            throw({error});
-        }
+    constructor(){
+        super(airport);
     }
-
-    async read(id){
-        try {
-            const response = await airport.findByPk(id);
-            return response;
-        } catch (error) {
-            console.log('Error in Airport Repo layer', error);
-            throw({error});
-        }
-    }
+    
 }
 
 module.exports = AiportRepo;
