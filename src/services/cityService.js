@@ -1,49 +1,17 @@
 const { CityRepo } = require("../repository/index");
+const CrudService = require('./crudService');
 
-class CityService {
+class CityService extends CrudService{
+    
     constructor() {
-        this.cityRepoObj = new CityRepo();
+        const cityRepo = new CityRepo();
+        super(cityRepo);
+        this.cityRepo = cityRepo;
     }
 
-    async createCity(data) {
+    async readAll(filter) {
         try {
-            const city = await this.cityRepoObj.createCity(data);
-            return city;
-        } catch (error) {
-            console.log("Error occured at Service layer", error);
-        }
-    }
-
-    async deleteCity(cityId) {
-        try {
-            const response = await this.cityRepoObj.deleteCity(cityId);
-            return response;
-        } catch (error) {
-            console.log("Error occured at Service layer", error);
-        }
-    }
-
-    async readCity(cityId) {
-        try {
-            const response = await this.cityRepoObj.readCity(cityId);
-            return response;
-        } catch (error) {
-            console.log("Error occured at Service layer", error);
-        }
-    }
-
-    async updateCity(cityId, data) {
-        try {
-            const response = await this.cityRepoObj.updateCity(cityId, data);
-            return response;
-        } catch (error) {
-            console.log("Error occured at Service layer", error);
-        }
-    }
-
-    async readAllCities(filter) {
-        try {
-            const response = await this.cityRepoObj.readAllCities({
+            const response = await this.cityRepo.readAll({
                 name: filter.name,
             });
             return response;
@@ -54,7 +22,7 @@ class CityService {
 
     async createAll(cities) {
         try {
-            const response = await this.cityRepoObj.createAllCities(cities);
+            const response = await this.cityRepo.createAll(cities);
             return response;
         } catch (error) {
             console.log("Error occured at Service layer", error);

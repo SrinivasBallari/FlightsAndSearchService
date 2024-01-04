@@ -1,57 +1,14 @@
+const CrudRepo = require('./crudRepo');
 const { city } = require('../models/index');
 const { Op } = require('sequelize');
 
-class CityRepo{
+class CityRepo extends CrudRepo{
 
-    async createCity({ name }){
-        try {
-            const createdCity = await city.create({
-                name : name
-            });
-            return createdCity;
-        } catch (error) {
-            console.log(`Error creating city : ${name}`);
-            throw({error});
-        }
+    constructor(){
+        super(city);
     }
 
-    async deleteCity(cityId){
-        try {
-            await city.destroy({
-                where:{
-                    id : cityId
-                }
-            });
-            return true;
-        } catch (error) {
-            console.log(`Error deleting city with id: ${cityId} `);
-            throw({error});
-        }
-    }
-
-    async readCity(cityId){
-        try {
-            const foundCity = await city.findByPk(cityId);
-            return foundCity;          
-        } catch (error) {
-            console.log(`Error finding city with id : ${cityId} `);
-            throw({error})
-        }
-    }
-
-    async updateCity(cityId, data){
-        try {
-            const searchedCity = await city.findByPk(cityId);
-            searchedCity.name = data.name;
-            await searchedCity.save();
-            return searchedCity;                
-        } catch (error) {
-            console.log(`Error finding city with id : ${cityId}`);
-            throw({error});
-        }
-    }
-
-    async readAllCities(queryFilter){
+    async readAll(queryFilter){
         try {
             if(queryFilter.name){
                 const cities = await city.findAll({
@@ -71,7 +28,7 @@ class CityRepo{
         }
     }
 
-    async createAllCities(cities){
+    async createAll(cities){
         try {
             const createdCities = await city.bulkCreate(cities);
             return createdCities;

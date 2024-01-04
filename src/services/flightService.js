@@ -1,18 +1,23 @@
 const { FlightRepo , AirplaneRepo} = require('../repository/index');
-const { comapreTime } = require('../utils/helper');
-class FlightService {
+const { compareTime } = require('../utils/helper');
+const CrudService = require('./crudService');
+
+class FlightService extends CrudService{
 
     constructor(){
+        const flightRepo = new FlightRepo();
+        super(flightRepo);
+
+        this.flightRepo = flightRepo;
         this.airplaneRepo = new AirplaneRepo();
-        this.flightRepo = new FlightRepo();
     }
 
-    async createFlight(data){
+    async create(data){
         try {
-            if(!comapreTime(data.arrivalTime , data.departureTime)){
+            if(!compareTime(data.arrivalTime , data.departureTime)){
                 throw {error : 'Arrival time cannot be greater than departure time'};
             }
-            const airplane = await this.airplaneRepo.getAirplane(data.airplaneId);
+            const airplane = await this.airplaneRepo.read(data.airplaneId);
             const flight = await this.flightRepo.createFlight({
                 ...data,
                 totalSeats: airplane.capacity
@@ -24,9 +29,9 @@ class FlightService {
         }
     }
 
-    async getAllFlightsData(data){
+    async readAll(data){
         try {
-            const flights = await this.flightRepo.getAllFlights(data);
+            const flights = await this.flightRepo.readAll(data);
             return flights;
         } catch (error) {
             console.log("Error at service layer ",error);

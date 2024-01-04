@@ -1,4 +1,5 @@
 class CrudService{
+    
     constructor(repo){
         this.repo = repo;
     }
@@ -43,9 +44,10 @@ class CrudService{
         }
     }
 
-    async destroy(){
+    async destroy(id){
         try {
-            
+            const response = await this.repo.destroy(id);
+            return response;
         } catch (error) {
             console.log("Error occured in crud service");
             throw({error});

@@ -1,7 +1,12 @@
+const CrudRepo = require('./crudRepo');
 const {flight}  = require('../models/index');
 const {Op} = require('sequelize');
 
-class FlightRepo {
+class FlightRepo extends CrudRepo{
+
+    constructor(){
+        super(flight);
+    }
 
     #createFilter(data){
         let filter = {};
@@ -31,34 +36,32 @@ class FlightRepo {
     }
 
 
-    async createFlight(data){
-        try {
-            const createdFlight = await flight.create(data);
-            return createdFlight;
-        } catch (error) {
-            console.log("Error in repository layer",error);
-            throw(error);
-        }
-    }
+    // async createFlight(data){
+    //     try {
+    //         const createdFlight = await flight.create(data);
+    //         return createdFlight;
+    //     } catch (error) {
+    //         console.log("Error in repository layer",error);
+    //         throw(error);
+    //     }
+    // }
 
-    async getFlight(flightId){
-        try {
-            const fetchedFlight = await flight.findByPk(flightId);
-            return fetchedFlight;
-        } catch (error) {
-            console.log("Error in repository layer",error);
-            throw(error);
-        }
-    }
+    // async getFlight(flightId){
+    //     try {
+    //         const fetchedFlight = await flight.findByPk(flightId);
+    //         return fetchedFlight;
+    //     } catch (error) {
+    //         console.log("Error in repository layer",error);
+    //         throw(error);
+    //     }
+    // }
 
-    async getAllFlights(filter){
+    async readAll(filter){
         try {
-            console.log(filter);
             const filterObject = this.#createFilter(filter);
             const flights = await flight.findAll({
                 where: filterObject
             });
-            console.log("fasdjfa",flights);
             return flights;
         } catch (error) {
             console.log("Error in repository layer",error);
