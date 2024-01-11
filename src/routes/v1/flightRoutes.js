@@ -9,4 +9,7 @@ router.post(
     flightController.create
 );
 router.get('/flights',flightController.getAll);
+router.get('/flight/:id',flightController.get);
+router.patch('/flight/:id',flightController.update);
+
 module.exports = router;

@@ -34,28 +34,7 @@ class FlightRepo extends CrudRepo{
         }
         return filter;
     }
-
-
-    // async createFlight(data){
-    //     try {
-    //         const createdFlight = await flight.create(data);
-    //         return createdFlight;
-    //     } catch (error) {
-    //         console.log("Error in repository layer",error);
-    //         throw(error);
-    //     }
-    // }
-
-    // async getFlight(flightId){
-    //     try {
-    //         const fetchedFlight = await flight.findByPk(flightId);
-    //         return fetchedFlight;
-    //     } catch (error) {
-    //         console.log("Error in repository layer",error);
-    //         throw(error);
-    //     }
-    // }
-
+    
     async readAll(filter){
         try {
             const filterObject = this.#createFilter(filter);
